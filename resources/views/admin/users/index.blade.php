@@ -3,7 +3,17 @@
 @section('title', 'Usuários')
 
 @section('content_header')
-    <h1>Usuários</h1>
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1>Usuários</h1>
+        </div>
+        <div class="col-sm-6">
+            <a href="#" class="btn btn-success float-sm-right">
+                <i class="fa fa-plus"></i>
+                Criar usuário
+            </a>
+        </div>
+    </div>
 @stop
 
 @section('content')
@@ -46,7 +56,9 @@
     </div>
 @stop
 
-@section('css', '')
+@section('css')
+    <link rel="stylesheet" href="{{ url('assets/admin/css/app.css') }}">
+@endsection
 
 @section('js')
     <script type="text/javascript">
