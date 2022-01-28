@@ -38,6 +38,12 @@ class User extends Authenticatable
 
     protected $appends = ['profile_photo_url'];
 
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
+
     public function games(): HasMany
     {
         return $this->hasMany(Game::class, 'user_id', 'id');
