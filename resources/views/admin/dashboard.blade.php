@@ -19,7 +19,7 @@
                 <div class="icon">
                     <i class="fas fa-users"></i>
                 </div>
-                <a href="#" class="small-box-footer">
+                <a href="{{ route('admin.users.index') }}" class="small-box-footer">
                     Ver mais <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>

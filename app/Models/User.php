@@ -34,7 +34,12 @@ class User extends Authenticatable
         'two_factor_secret',
     ];
 
-    protected $casts = ['email_verified_at' => 'datetime'];
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime'
+    ];
 
     protected $appends = ['profile_photo_url'];
 
@@ -43,6 +48,11 @@ class User extends Authenticatable
         'updated_at',
         'deleted_at'
     ];
+
+    public static function findByUuid(string $uuid)
+    {
+        return self::where('uuid', $uuid)->first();
+    }
 
     public function games(): HasMany
     {
@@ -62,5 +72,10 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->role->slug === 'admin';
+    }
+
+    public function isActive(): bool
+    {
+        return !$this->deleted_at;
     }
 }
