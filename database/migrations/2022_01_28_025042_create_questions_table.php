@@ -14,8 +14,24 @@ class CreateQuestionsTable extends Migration
     public function up()
     {
         Schema::create('questions', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->unsignedInteger('category_id');
+            $table->unsignedInteger('user_id');
+            $table->uuid('uuid');
+            $table->string('title');
+            $table->text('answers');
+            $table->text('description');
             $table->timestamps();
+            $table->softDeletes();
+
+
+            $table->foreign('category_id')
+                ->references('id')
+                ->on('categories');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users');
         });
     }
 
@@ -26,6 +42,10 @@ class CreateQuestionsTable extends Migration
      */
     public function down()
     {
+        Schema::table('questions', function (Blueprint $table){
+            $table->dropForeign(['category_id', 'user_id']);
+        });
+
         Schema::dropIfExists('questions');
     }
 }

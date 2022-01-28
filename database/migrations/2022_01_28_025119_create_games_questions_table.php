@@ -14,8 +14,17 @@ class CreateGamesQuestionsTable extends Migration
     public function up()
     {
         Schema::create('games_questions', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->unsignedInteger('game_id');
+            $table->unsignedInteger('question_id');
+            $table->boolean('is_answered')->default(false);
+
+            $table->foreign('game_id')
+                ->references('id')
+                ->on('games');
+
+            $table->foreign('question_id')
+                ->references('id')
+                ->on('questions');
         });
     }
 
@@ -26,6 +35,10 @@ class CreateGamesQuestionsTable extends Migration
      */
     public function down()
     {
+        Schema::table('games_questions', function (Blueprint $table){
+            $table->dropForeign(['game_id', 'question_id']);
+        });
+
         Schema::dropIfExists('games_questions');
     }
 }
