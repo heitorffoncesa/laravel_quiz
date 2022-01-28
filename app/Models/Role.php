@@ -17,6 +17,11 @@ class Role extends Model
         'slug'
     ];
 
+    public static function findBySlug(string $slug)
+    {
+        return self::where('slug', $slug)->first();
+    }
+
     public function users(): HasMany
     {
         return $this->hasMany(User::class, 'role_id', 'id');

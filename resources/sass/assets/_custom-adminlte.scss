@@ -1,0 +1,10 @@
+$sidebarColor: #343a40;
+
+.page-item.active .page-link {
+    background-color: $sidebarColor;
+    border-color: $sidebarColor;
+}
+
+.nav-pills .nav-link.active, .nav-pills .sh {
+    background-color: $sidebarColor !important;
+}

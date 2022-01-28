@@ -20,50 +20,88 @@
                     <div class="tab-content">
                         <div class="active tab-pane" id="main">
                             <p>
-                                <strong>ID:</strong> {{ $user->id }}
+                                <strong>ID:</strong>
+                                {{ $user->id }}
                             </p>
 
                             <p>
-                                <strong>UUID:</strong> {{ $user->uuid }}
+                                <strong>UUID:</strong>
+                                {{ $user->uuid }}
                             </p>
 
                             <p>
-                                <strong>Nome:</strong> {{ $user->name }}
+                                <strong>Nome:</strong>
+                                {{ $user->name }}
                             </p>
 
                             <p>
-                                <strong>E-mail:</strong> {{ $user->email }}
+                                <strong>E-mail:</strong>
+                                {{ $user->email }}
                             </p>
 
                             <p>
-                                <strong>Permissão:</strong> {{ $user->role->name }}
+                                <strong>Permissão:</strong>
+                                {{ $user->role->name }}
                             </p>
 
                             <p>
-                                <strong>Status:</strong> {{ $user->isActive() ? 'Ativo' : 'Inativo' }}
+                                <strong>Status:</strong>
+                                {{ $user->isActive() ? 'Ativo' : 'Inativo' }}
                             </p>
 
                             <p>
-                                <strong>Criado em:</strong> {{ $user->created_at }}
+                                <strong>Criado em:</strong>
+                                {{ (new \Illuminate\Support\Carbon($user->created_at))->format('d/m/Y H:i') }}
                             </p>
 
                             <p>
-                                <strong>Atualizado em:</strong> {{ $user->updated_at }}
+                                <strong>Atualizado em:</strong>
+                                {{ (new \Illuminate\Support\Carbon($user->updated_at))->format('d/m/Y H:i') }}
                             </p>
 
                             @if(!$user->isActive())
                                 <p>
-                                    <strong>Inativado em:</strong> {{ $user->deleted_at }}
+                                    <strong>Inativado em:</strong>
+                                    {{ (new \Illuminate\Support\Carbon($user->deleted_at))->format('d/m/Y H:i') }}
                                 </p>
                             @endif
                         </div>
                     </div>
+                </div>
+                <div class="card-footer text-center">
+                    @if((!$user->isAdmin() && $user->isActive()) || $user->isLoggedInUser())
+                        <a href="{{ route('admin.users.edit', $user->uuid) }}" class="btn btn-secondary">Editar</a>
+                    @endif
+
+                    @if(!$user->isAdmin())
+                        @if($user->isActive())
+                            <a href="#" onclick="document.getElementById('delete-form').submit(); return;"
+                               class="btn btn-danger">Inativar</a>
+
+                            <form id="delete-form" action="{{ route('admin.users.destroy', $user->uuid) }}"
+                                  method="POST">
+                                @csrf
+                                @method('DELETE')
+                            </form>
+                        @else
+                            <a href="#" onclick="document.getElementById('activate-form').submit(); return;"
+                               class="btn btn-success">Ativar</a>
+
+                            <form id="activate-form" action="{{ route('admin.users.activate', $user->uuid) }}"
+                                  method="POST">
+                                @csrf
+                                @method('PUT')
+                            </form>
+                        @endif
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 @stop
 
-@section('css', '')
+@section('css')
+    <link rel="stylesheet" href="{{ url('assets/admin/css/app.css') }}">
+@endsection
 
 @section('js', '')

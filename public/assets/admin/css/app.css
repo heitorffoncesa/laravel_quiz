@@ -2,3 +2,7 @@
   background-color: #343a40;
   border-color: #343a40;
 }
+
+.nav-pills .nav-link.active, .nav-pills .sh {
+  background-color: #343a40 !important;
+}

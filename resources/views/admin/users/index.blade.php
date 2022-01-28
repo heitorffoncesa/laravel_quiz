@@ -8,7 +8,7 @@
             <h1>Usuários</h1>
         </div>
         <div class="col-sm-6">
-            <a href="#" class="btn btn-success float-sm-right">
+            <a href="{{ route('admin.users.create') }}" class="btn btn-success float-sm-right">
                 <i class="fa fa-plus"></i>
                 Criar usuário
             </a>
@@ -37,14 +37,25 @@
                             <tbody>
                             @foreach($users as $user)
                                 <tr>
-                                    <th class="text-center">{{ $user->id }}</th>
-                                    <th class="text-center">{{ $user->name }}</th>
-                                    <th class="text-center">{{ $user->email }}</th>
-                                    <th class="text-center">{{ $user->role->name }}</th>
-                                    <th class="text-center">{{ is_null($user->deleted_at) ? 'Ativo' : 'Inativo' }}</th>
-                                    <th class="text-center">
-                                        <a href="{{ route('admin.users.show', $user->uuid) }}" class="btn btn-sm btn-secondary">Ver</a>
-                                    </th>
+                                    <td class="text-center">{{ $user->id }}</td>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td class="text-center">{{ $user->role->name }}</td>
+                                    <td class="text-center">
+                                        @if(is_null($user->deleted_at))
+                                            <span class="badge bg-success">Ativo</span>
+                                        @else
+                                            <span class="badge bg-danger">Inativo</span>
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{{ route('admin.users.show', $user->uuid) }}"
+                                           class="btn btn-sm btn-secondary"
+                                           title="Visualizar"
+                                        >
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>

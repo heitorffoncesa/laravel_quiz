@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -49,11 +50,6 @@ class User extends Authenticatable
         'deleted_at'
     ];
 
-    public static function findByUuid(string $uuid)
-    {
-        return self::where('uuid', $uuid)->first();
-    }
-
     public function games(): HasMany
     {
         return $this->hasMany(Game::class, 'user_id', 'id');
@@ -76,6 +72,11 @@ class User extends Authenticatable
 
     public function isActive(): bool
     {
-        return !$this->deleted_at;
+        return is_null($this->deleted_at);
+    }
+
+    public function isLoggedInUser(): bool
+    {
+        return Auth::id() === $this->id;
     }
 }
