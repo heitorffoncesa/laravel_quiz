@@ -271,16 +271,7 @@ return [
         [
             'text' => 'Usuários',
             'icon' => 'fas fa-users',
-            'submenu' => [
-                [
-                    'text' => 'Listar usuários',
-                    'url' => '#',
-                ],
-                [
-                    'text' => 'Criar usuário',
-                    'url' => '#',
-                ]
-            ]
+            'url'  => 'admin/users'
         ],
 
 
