@@ -88,7 +88,7 @@ return [
     'layout_fixed_sidebar' => null,
     'layout_fixed_navbar' => null,
     'layout_fixed_footer' => null,
-    'layout_dark_mode' => null,
+    'layout_dark_mode' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -188,7 +188,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'admin',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -225,6 +225,11 @@ return [
     */
 
     'menu' => [
+        [
+            'text' => 'Dashboard',
+            'url' => 'admin/',
+            'icon' => 'fas fa-tachometer-alt',
+        ],
         ['header' => 'GERAL'],
         [
             'text' => 'Categorias',
@@ -271,16 +276,7 @@ return [
         [
             'text' => 'Usuários',
             'icon' => 'fas fa-users',
-            'submenu' => [
-                [
-                    'text' => 'Listar usuários',
-                    'url' => '#',
-                ],
-                [
-                    'text' => 'Criar usuário',
-                    'url' => '#',
-                ]
-            ]
+            'url'  => 'admin/users'
         ],
 
 
@@ -294,13 +290,6 @@ return [
             'text' => 'Alterar senha',
             'url' => '#',
             'icon' => 'fas fa-fw fa-lock',
-        ],
-
-        ['header' => 'ADMINISTRAÇÃO'],
-        [
-            'text' => 'Usuários do sistema',
-            'url' => '#',
-            'icon' => 'fas fa-fw fa-users',
         ],
     ],
 

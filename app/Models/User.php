@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -34,7 +35,12 @@ class User extends Authenticatable
         'two_factor_secret',
     ];
 
-    protected $casts = ['email_verified_at' => 'datetime'];
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime'
+    ];
 
     protected $appends = ['profile_photo_url'];
 
@@ -62,5 +68,15 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->role->slug === 'admin';
+    }
+
+    public function isActive(): bool
+    {
+        return is_null($this->deleted_at);
+    }
+
+    public function isLoggedInUser(): bool
+    {
+        return Auth::id() === $this->id;
     }
 }
